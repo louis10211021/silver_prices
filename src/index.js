@@ -63,6 +63,22 @@ app.get('/api/prices/search', (req, res) => {
         });
 });
 
+// 刪除價格記錄
+app.delete('/api/prices/:id', (req, res) => {
+    const { id } = req.params;
+    db.run('DELETE FROM silver_prices WHERE id = ?', [id], function(err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        if (this.changes === 0) {
+            res.status(404).json({ error: '找不到該筆資料' });
+        } else {
+            res.json({ success: true });
+        }
+    });
+});
+
 app.listen(port, () => {
     console.log(`伺服器運行在 http://localhost:${port}`);
 });

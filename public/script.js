@@ -73,6 +73,7 @@ function displayPrices(prices) {
         row.innerHTML = `
             <td>${formatDate(price.date)}</td>
             <td>$${price.price.toFixed(2)}</td>
+            <td><button class="btn btn-danger btn-sm" onclick="deletePrice(${price.id})">刪除</button></td>
         `;
         priceList.appendChild(row);
     });
@@ -86,4 +87,18 @@ function formatDate(dateString) {
         month: '2-digit',
         day: '2-digit'
     });
+}
+
+// 刪除價格記錄
+window.deletePrice = async function(id) {
+    if (!confirm('確定要刪除這筆記錄嗎？')) return;
+    try {
+        const response = await fetch(`/api/prices/${id}`, { method: 'DELETE' });
+        if (!response.ok) {
+            throw new Error('刪除失敗');
+        }
+        loadPrices();
+    } catch (error) {
+        alert(error.message);
+    }
 }
