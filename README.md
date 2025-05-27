@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS silver_prices (
 
 ## 開發者
 
-[您的名字]
+陳心樺
 
 ## 授權
 
